@@ -1,0 +1,22 @@
+[
+  {"Service_Endpoint_HealthState": [
+    {
+      "_id": "critical",
+      "count": 50
+    },
+    {
+      "_id": "ok",
+      "count": 50
+    }
+  ]},
+  {"Service_Type": [
+    {
+      "_id": "jms",
+      "count": 50
+    },
+    {
+      "_id": "sms",
+      "count": 50
+    }
+  ]}
+]

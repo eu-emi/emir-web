@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>Vaadin Web Application</display-name>
+<!-- 	<context-param> -->
+<!-- 		<description>Vaadin production mode</description> -->
+<!-- 		<param-name>productionMode</param-name> -->
+<!-- 		<param-value>true</param-value> -->
+<!-- 	</context-param> -->
+
+	<context-param>
+		<description>Vaadin production mode</description>
+		<param-name>path</param-name>
+		<param-value>./config/emir.properties</param-value>
+	</context-param>
+	
+<!-- 	<filter> -->
+<!-- 		<filter-name>guiceFilter</filter-name> -->
+<!-- 		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class> -->
+<!-- 	</filter> -->
+
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>guiceFilter</filter-name> -->
+<!-- 		<url-pattern>/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
+
+<!-- 	<listener> -->
+<!-- 		<listener-class>eu.emi.emir.ui.base.GuiceServletInjector</listener-class> -->
+<!-- 	</listener> -->
+<!-- 	<session-config> -->
+<!-- 		<session-timeout>300</session-timeout> -->
+<!-- 	</session-config> -->
+
+ <filter>
+                <filter-name>basic</filter-name>
+<!--                 <filter-class>org.basic.BasicFilter</filter-class> -->
+                <filter-class>eu.emi.emir.ui.guice.BaseFilter</filter-class>
+        </filter>
+
+        <filter-mapping>
+                <filter-name>basic</filter-name>
+                <url-pattern>/*</url-pattern>
+        </filter-mapping>
+
+<!-- Note: Un-comment only when not using the Guice -->
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>vaadin</servlet-name> -->
+<!-- 		<servlet-class>com.vaadin.server.VaadinServlet</servlet-class> -->
+<!-- 		<servlet-class>eu.emi.emir.web.BaseServlet</servlet-class> -->
+<!-- 		<init-param> -->
+<!-- 			<description>Vaadin UI to display</description> -->
+<!-- 			<param-name>UI</param-name> -->
+<!-- 			<param-value>eu.emi.emir.web.EmirApplication</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<description>EMIR Server URL</description> -->
+<!-- 			<param-name>emir.serverAddress</param-name> -->
+<!-- 			<param-value>http://zam052v04.zam.juelich.de:9127</param-value> -->
+<!-- 		</init-param>		 -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>vaadin</servlet-name> -->
+<!-- 		<url-pattern>/*</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+</web-app>
