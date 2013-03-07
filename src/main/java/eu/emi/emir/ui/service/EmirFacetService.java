@@ -3,7 +3,7 @@
  */
 package eu.emi.emir.ui.service;
 
-import java.util.Set;
+import java.util.Map;
 
 import org.codehaus.jettison.json.JSONArray;
 
@@ -18,13 +18,21 @@ import eu.emi.emir.client.EMIRClient;
 public class EmirFacetService implements FacetService{
 
 	@Inject
-	private EMIRClient client;
+	private EMIRClient client = new EMIRClient("http://localhost:9127");
+	
+	/**
+	 * 
+	 */
+	public EmirFacetService() {
+		System.out.println("");
+	}
+	
 	/* (non-Javadoc)
 	 * @see eu.emi.emir.ui.service.FacetService#getFacets()
 	 */
 	@Override
-	public JSONArray getFacets(Set<String> facets) {
+	public JSONArray getFacets(Map<String, String> facets) {
 		return client.facetSearch(facets);
-	}
+	}	
 
 }

@@ -6,36 +6,38 @@ package eu.emi.emir.ui.view.facet;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import com.google.common.eventbus.EventBus;
-import com.google.inject.name.Named;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.VerticalLayout;
 
+import eu.emi.emir.client.query.URIQuery;
 import eu.emi.emir.ui.EmirUI;
-import eu.emi.emir.ui.view.listing.ListingView;
 import eu.emi.emir.ui.view.listing.ListingViewEvent;
 
 /**
  * @author a.memon
- *
+ * 
  */
-public class FacetView extends VerticalLayout implements View, ItemClickListener{
-	
-	public final static String VIEW_NAME ="view.facet"; 
-	
+public class FacetView extends VerticalLayout implements View,
+		ItemClickListener {
+
+	public final static String VIEW_NAME = "view.facet";
+
 	private EventBus bus;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private FacetTree tree = new FacetTree();
-	
+
+	private FacetTree tree;
+
+	private FacetPresenter presenter;
+
 	/**
 	 * 
 	 */
@@ -47,31 +49,47 @@ public class FacetView extends VerticalLayout implements View, ItemClickListener
 	 * 
 	 */
 	private void initLayout() {
-		System.out.println("facet view called");
-		tree = new FacetTree();
-		tree.addItemClickListener(this);
-		addComponent(tree);
 		bus = EmirUI.getCurrent().getEventBus();
-		
-		
+		presenter = EmirUI.getCurrent().getInjector()
+				.getInstance(FacetPresenter.class);
+		tree = new FacetTree(presenter.getFacets());
+		tree.addItemClickListener(this);
+
+		addComponent(tree);
+
 	}
 
-	/* (non-Javadoc)
-	 * @see com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener.ViewChangeEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.vaadin.navigator.View#enter(com.vaadin.navigator.ViewChangeListener
+	 * .ViewChangeEvent)
 	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
-				
+
 	}
 
-	/* (non-Javadoc)
-	 * @see com.vaadin.event.ItemClickEvent.ItemClickListener#itemClick(com.vaadin.event.ItemClickEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.vaadin.event.ItemClickEvent.ItemClickListener#itemClick(com.vaadin
+	 * .event.ItemClickEvent)
 	 */
 	@Override
 	public void itemClick(ItemClickEvent event) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put(ListingViewEvent.QUERY, "query");
-		bus.post(new ListingViewEvent(map));
+
+		if (!tree.isRoot(event.getItemId())) {
+			String itemVal = tree.getItem(event.getItemId())
+			.getItemProperty("name").getValue().toString();
+			
+			String attrValue = itemVal.substring(0, itemVal.indexOf('('));
+			String key = tree.getItem(tree.getParent(event.getItemId())).getItemProperty("name").getValue().toString();
+			String value = tree.getItem(event.getItemId()).getItemProperty("name").getValue().toString();
+			bus.post(new ListingViewEvent(URIQuery.builder().addParam(key, attrValue.trim()).build()));
 		}
+	}
 
 }

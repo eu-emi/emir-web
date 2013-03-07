@@ -14,19 +14,18 @@ import java.util.Map;
 public interface AttributeMap extends Serializable{
 
 	public static class Factory {
-		public static <T extends AttributeMap> AttributeMap newInstance(
-				String type) {
-			AttributeMap m = null;
+		public static <T extends AttributeMap> T newInstance(
+				Class<T> type) {
+//			AttributeMap m = null;
+			T a = null;
 			try {
-				m = (AttributeMap) Class.forName(type).newInstance();
+				a = type.newInstance();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-			return m;
+			} 
+			return a;
 		}
 
 	}

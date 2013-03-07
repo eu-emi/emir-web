@@ -8,14 +8,14 @@ import eu.emi.emir.ui.data.AttributeMapType;
  */
 public class FacetAttributeMapType implements AttributeMapType{
 
-	public static final String FACET = FacetServiceAttributeMap.class.getName();
+	public static final Class<FacetAttributeMap> FACET = FacetAttributeMap.class;
 	
 	/* (non-Javadoc)
 	 * @see eu.emi.emir.ui.data.AttributeMapType#getTypeName()
 	 */
 	@Override
 	public String getTypeName() {
-		return FACET;
+		return FACET.getName();
 	}
 
 }

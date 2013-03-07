@@ -3,7 +3,7 @@
  */
 package eu.emi.emir.ui.service;
 
-import java.util.Set;
+import java.util.Map;
 
 import org.codehaus.jettison.json.JSONArray;
 
@@ -15,5 +15,5 @@ import org.codehaus.jettison.json.JSONArray;
  *
  */
 public interface FacetService {
-	public JSONArray getFacets(Set<String> facets);	
+	public JSONArray getFacets(Map<String, String> facets);	
 }

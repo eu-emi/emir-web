@@ -10,7 +10,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<vaadin.version>7.0.0</vaadin.version>
+		<vaadin.version>7.0.1</vaadin.version>
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 		<emir.version>1.2.2-SNAPSHOT</emir.version>
 		<jetty.version>8.1.4.v20120524</jetty.version>
@@ -206,7 +206,7 @@
 											vaadin-maven-plugin
 										</artifactId>
 										<versionRange>
-											[7.0.0.rc1,)
+											[7.0.1,)
 										</versionRange>
 										<goals>
 											<goal>resources</goal>

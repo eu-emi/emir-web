@@ -6,6 +6,7 @@ package eu.emi.emir.ui.view.facet;
 import java.util.HashMap;
 import java.util.Map;
 
+import eu.emi.emir.client.FacetKeyType;
 import eu.emi.emir.client.ServiceBasicAttributeNames;
 import eu.emi.emir.ui.data.AbstractAttributeMap;
 
@@ -13,7 +14,7 @@ import eu.emi.emir.ui.data.AbstractAttributeMap;
  * @author a.memon
  *
  */
-public class FacetServiceAttributeMap extends AbstractAttributeMap{
+public class FacetAttributeMap extends AbstractAttributeMap{
 	
 	/**
 	 * 
@@ -23,12 +24,13 @@ public class FacetServiceAttributeMap extends AbstractAttributeMap{
 	/**
 	 * 
 	 */
-	public FacetServiceAttributeMap() {
+	public FacetAttributeMap() {
+		//TODO: publish it from the properties file
 		Map<String, String> m = new HashMap<String, String>();
-		m.put(ServiceBasicAttributeNames.SERVICE_ENDPOINT_CAPABILITY.toString(), "Capabilities");
-		m.put(ServiceBasicAttributeNames.SERVICE_TYPE.toString(), "Types");
+		m.put(ServiceBasicAttributeNames.SERVICE_ENDPOINT_CAPABILITY.toString(), FacetKeyType.ARRAY);
+		m.put(ServiceBasicAttributeNames.SERVICE_TYPE.toString(), FacetKeyType.SIMPLE);
 		setAttributeMap(m);
-		setAttributeMapType(FacetAttributeMapType.FACET);
+		setAttributeMapType(FacetAttributeMapType.FACET.getName());
 	}
 	
 	/* (non-Javadoc)

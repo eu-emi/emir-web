@@ -47,10 +47,9 @@ public class BaseFilter extends GuiceFilter {
     if (INJECTOR != null) {
       throw new ServletException("Injector already created?!");
     }
-    INJECTOR = Guice.createInjector(new BaseModule(), new ApplicationModule());
+    INJECTOR = Guice.createInjector(new BaseModule(), new ApplicationModule(), new ViewModule());
     filterConfig.getServletContext().log("Created injector with " + INJECTOR.getAllBindings().size() + " bindings.");
     
-	    
     super.init(filterConfig);
   }
   

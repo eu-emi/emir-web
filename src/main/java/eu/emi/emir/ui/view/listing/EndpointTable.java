@@ -68,15 +68,15 @@ public class EndpointTable extends Table implements ItemClickListener {
 
 		Map<String, String> map = attrMap.getAttributeMap();
 
-		setColumnHeaders(map);
+//		setColumnHeaders(map);
 
 		// populate data
-		try {
-			setContainerDataSource(new JSONArrayLazyIndexedContainer(
-					generateDummyData()), map.keySet());
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			setContainerDataSource(new JSONArrayLazyIndexedContainer(
+//					generateDummyData()), map.keySet());
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
 
 		addItemClickListener(this);
 
@@ -128,22 +128,17 @@ public class EndpointTable extends Table implements ItemClickListener {
 	 */
 	@Override
 	public void itemClick(ItemClickEvent event) {
-		com.vaadin.ui.Window w = new com.vaadin.ui.Window("Detailed View");
+		
 
 	}
 
 	/**
 	 * 
 	 */
-	public void updateTable() {
-		// populate data
-		try {
-			// data changed
-			setContainerDataSource(new JSONArrayLazyIndexedContainer(
-					generateDummyData()), attrMap.getAttributeMap().keySet());
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
+	public void updateTable(JSONArray ja) {
+		//TODO: deal with nulls
+		Map<String, String> map = attrMap.getAttributeMap();
+		setColumnHeaders(map);
+		setContainerDataSource(new JSONArrayLazyIndexedContainer(ja), map.keySet());
 	}
 }

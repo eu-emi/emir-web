@@ -5,6 +5,10 @@ package eu.emi.emir.ui.view.listing;
 
 import java.util.Map;
 
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
+
+import eu.emi.emir.client.query.URIQuery;
 import eu.emi.emir.ui.Event;
 
 /**
@@ -17,16 +21,15 @@ public class ListingViewEvent implements Event{
 	
 	private Map<String, String> map;
 	
+	private final URIQuery q;
+	
 	/**
 	 * 
 	 */
-	public ListingViewEvent() {
-		
+	public ListingViewEvent(URIQuery q) {
+		this.q = q;
 	}
 	
-	public ListingViewEvent(Map<String, String> params) {
-		this.map = params;
-	}
 	
 	
 	/* (non-Javadoc)
@@ -45,6 +48,16 @@ public class ListingViewEvent implements Event{
 	public Map<String, String> getParameters() {
 		return map;
 	}
+	
+	public URIQuery getQuery(){
+		return this.q;
+	}
+	
+	@Subscribe
+	public void handleListingViewEvent(ListingViewEvent e){
+		
+	}
+	
 	
 	
 }

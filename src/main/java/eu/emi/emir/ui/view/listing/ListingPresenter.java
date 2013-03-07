@@ -3,8 +3,13 @@
  */
 package eu.emi.emir.ui.view.listing;
 
-import com.google.common.eventbus.Subscribe;
+import org.codehaus.jettison.json.JSONArray;
 
+import com.google.common.eventbus.Subscribe;
+import com.google.inject.Inject;
+
+import eu.emi.emir.client.EMIRClient;
+import eu.emi.emir.client.query.URIQuery;
 import eu.emi.emir.ui.EmirUI;
 
 /**
@@ -17,28 +22,26 @@ public class ListingPresenter {
 	
 	EmirUI ui;
 	ListingView view;
-	/**
-	 * 
-	 */
-	public ListingPresenter() {
-		
-	}
+	
+	@Inject
+	EMIRClient client;
 	
 	
 		
 	/**
 	 * @param listingView
 	 */
-	public ListingPresenter(ListingView listingView) {
+	public ListingPresenter() {
 		ui = EmirUI.getCurrent();
 		ui.getEventBus().register(this);
+		
+	}
+
+	public void setView(ListingView listingView){
 		this.view = listingView;
 	}
 
-
-
-	@Subscribe
-	public void handleListingViewEvent(ListingViewEvent e){
-		view.updateTable();
+	public JSONArray getListing(URIQuery q){
+		return client.queryByQueryParams(q);
 	}
 }

@@ -3,9 +3,16 @@
  */
 package eu.emi.emir.ui.view.listing;
 
+import org.codehaus.jettison.json.JSONArray;
+
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.VerticalLayout;
+
+import eu.emi.emir.ui.EmirUI;
+import eu.emi.emir.ui.vaadin.container.JSONArrayLazyIndexedContainer;
 
 /**
  * @author a.memon
@@ -16,16 +23,19 @@ public class ListingView extends VerticalLayout implements View{
 
 	public static final String VIEW_NAME = "view.listing";
 	
-	ListingPresenter presenter;
+	private ListingPresenter presenter;
 	
-	EndpointTable t;
+	private EndpointTable t;
+	
+	private EventBus bus;
 	
 	/**
 	 * 
 	 */
 	public ListingView() {
-		System.out.println("listing view called");
-		presenter = new ListingPresenter(this);
+		presenter = EmirUI.getCurrent().getInjector().getInstance(ListingPresenter.class);
+		bus = EmirUI.getCurrent().getEventBus();
+		bus.register(this);
 		generateUI();
 	}
 	
@@ -34,8 +44,9 @@ public class ListingView extends VerticalLayout implements View{
 	 */
 	private void generateUI() {
 		setSizeFull();
-		t = new EndpointTable();		
+		t = new EndpointTable();
 		addComponent(t);
+		t.updateTable(presenter.getListing(null));
 	}
 
 	/* (non-Javadoc)
@@ -46,8 +57,10 @@ public class ListingView extends VerticalLayout implements View{
 		
 	}
 	
-	public void updateTable(){
-		t.updateTable();
+	
+	@Subscribe
+	public void handleListingViewEvent(ListingViewEvent e){
+		t.updateTable(presenter.getListing(e.getQuery()));
 	}
 
 	

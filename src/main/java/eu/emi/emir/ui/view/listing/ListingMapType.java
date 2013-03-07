@@ -11,7 +11,7 @@ import eu.emi.emir.ui.data.AttributeMapType;
  */
 public class ListingMapType implements AttributeMapType{
 	
-	public static final String LISTING = ListingAttributeMap.class.getName();
+	public static final Class<ListingAttributeMap> LISTING = ListingAttributeMap.class;
 	
 	/* (non-Javadoc)
 	 * @see eu.emi.emir.ui.data.AttributeMapType#getTypeName()
@@ -19,7 +19,7 @@ public class ListingMapType implements AttributeMapType{
 	@Override
 	public String getTypeName() {
 		// TODO Auto-generated method stub
-		return LISTING;
+		return LISTING.getName();
 	}
 
 }

@@ -30,7 +30,7 @@ public class ListingAttributeMap extends AbstractAttributeMap{
 		m.put(ServiceBasicAttributeNames.SERVICE_ENDPOINT_URL.toString(), "URL");
 		m.put(ServiceBasicAttributeNames.SERVICE_EXPIRE_ON.toString(), "Expire On");
 		setAttributeMap(m);
-		setAttributeMapType(ListingMapType.LISTING);
+		setAttributeMapType(ListingMapType.LISTING.getName());
 	}
 	
 	/* (non-Javadoc)

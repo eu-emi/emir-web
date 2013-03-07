@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.codehaus.jettison.json.JSONArray;
 
+import eu.emi.emir.client.query.URIQuery;
 import eu.emi.emir.ui.data.Endpoint;
 
 /**
@@ -14,5 +15,5 @@ import eu.emi.emir.ui.data.Endpoint;
  *
  */
 public interface EndpointListingService {
-	public JSONArray getEndpoints();
+	public JSONArray getEndpoints(URIQuery query);
 }

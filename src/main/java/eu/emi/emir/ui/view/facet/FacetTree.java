@@ -3,10 +3,9 @@
  */
 package eu.emi.emir.ui.view.facet;
 
-import com.vaadin.data.util.HierarchicalContainer;
-import com.vaadin.event.ItemClickEvent;
-import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import org.codehaus.jettison.json.JSONArray;
 import com.vaadin.ui.Tree;
+import eu.emi.emir.ui.vaadin.container.JSONArrayHierarchichalContainer;
 
 /**
  * @author a.memon
@@ -14,21 +13,29 @@ import com.vaadin.ui.Tree;
  */
 public class FacetTree extends Tree{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * 
-	 */
-	public FacetTree() {
-		HierarchicalContainer container = new HierarchicalContainer();
-		container.addItem("Capabilities");
-		container.addItem("Types");
-		container.addItem("Domains");
+	JSONArrayHierarchichalContainer container;
+
+	public FacetTree(JSONArray ja) {
+		container = new JSONArrayHierarchichalContainer(ja);
 		setContainerDataSource(container);
+		setItemCaptionPropertyId(container.PROPERTY_NAME);
+        setItemCaptionMode(ItemCaptionMode.PROPERTY);
+        for (Object id : rootItemIds()) {
+            expandItemsRecursively(id);
+        }
+
 	}
+
+	/**
+	 * @param facets
+	 */
+	public void showFacets(JSONArray facets) {
+		setContainerDataSource(new JSONArrayHierarchichalContainer(facets));
+		
+	}
+	
 	
 
 }

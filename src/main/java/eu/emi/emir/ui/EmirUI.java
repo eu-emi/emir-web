@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.name.Named;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Title;
@@ -13,6 +14,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import com.vaadin.util.CurrentInstance;
 
+import eu.emi.emir.ui.service.FacetService;
 import eu.emi.emir.ui.view.facet.FacetView;
 import eu.emi.emir.ui.view.listing.ListingView;
 import eu.emi.emir.ui.view.main.MainView;
@@ -43,6 +45,23 @@ public class EmirUI extends UI {
 	private UIProperties webProps = new UIProperties(new Properties());
 	
 	private EventBus bus;
+	
+	private Injector injector;
+	
+	/**
+	 * @return the injector
+	 */
+	public Injector getInjector() {
+		return injector;
+	}
+
+	/**
+	 * @param injector the injector to set
+	 */
+	@Inject
+	public void setInjector(Injector injector) {
+		this.injector = injector;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -76,8 +95,6 @@ public class EmirUI extends UI {
 	 * 
 	 */
 	private void buildMainLayout() {
-		
-		System.out.println(webProps);
 		
 		navigator = new Navigator(UI.getCurrent(), this);
 
