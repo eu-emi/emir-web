@@ -19,6 +19,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceFilter;
 
+import eu.emi.emir.ui.thread.TaskStarter;
+
 public class BaseFilter extends GuiceFilter {
 
   private static Injector INJECTOR;
@@ -31,17 +33,6 @@ public class BaseFilter extends GuiceFilter {
     return INJECTOR;
   }
 
-//  @Override
-//  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-//    String uri = ((HttpServletRequest) request).getRequestURI();
-//    if (URI_ADMIN_PATTERN.matcher(uri).matches())
-//      if (!URI_NOADMIN_SET.contains(uri)) {
-//        chain.doFilter(request, response);
-//        return;
-//      }
-//    super.doFilter(request, response, chain);
-//  }
-
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
     if (INJECTOR != null) {
@@ -51,6 +42,9 @@ public class BaseFilter extends GuiceFilter {
     filterConfig.getServletContext().log("Created injector with " + INJECTOR.getAllBindings().size() + " bindings.");
     
     super.init(filterConfig);
+//TODO
+//    TaskStarter starter = new TaskStarter();
+//    starter.run();
   }
   
 

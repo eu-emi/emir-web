@@ -68,15 +68,15 @@ public class EndpointTable extends Table implements ItemClickListener {
 
 		Map<String, String> map = attrMap.getAttributeMap();
 
-//		setColumnHeaders(map);
+		// setColumnHeaders(map);
 
 		// populate data
-//		try {
-//			setContainerDataSource(new JSONArrayLazyIndexedContainer(
-//					generateDummyData()), map.keySet());
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		// setContainerDataSource(new JSONArrayLazyIndexedContainer(
+		// generateDummyData()), map.keySet());
+		// } catch (JSONException e) {
+		// e.printStackTrace();
+		// }
 
 		addItemClickListener(this);
 
@@ -95,7 +95,7 @@ public class EndpointTable extends Table implements ItemClickListener {
 	}
 
 	/**
-	 * @REMOVEME
+	 * @FIXME
 	 * @return
 	 * @throws JSONException
 	 */
@@ -128,7 +128,6 @@ public class EndpointTable extends Table implements ItemClickListener {
 	 */
 	@Override
 	public void itemClick(ItemClickEvent event) {
-		
 
 	}
 
@@ -136,9 +135,11 @@ public class EndpointTable extends Table implements ItemClickListener {
 	 * 
 	 */
 	public void updateTable(JSONArray ja) {
-		//TODO: deal with nulls
+		// TODO: deal with nulls
 		Map<String, String> map = attrMap.getAttributeMap();
 		setColumnHeaders(map);
-		setContainerDataSource(new JSONArrayLazyIndexedContainer(ja), map.keySet());
+
+		setContainerDataSource(new JSONArrayLazyIndexedContainer(ja),
+				map.keySet());
 	}
 }

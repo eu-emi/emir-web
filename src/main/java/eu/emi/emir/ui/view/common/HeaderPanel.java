@@ -17,8 +17,9 @@ public class HeaderPanel extends HorizontalLayout{
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * TODO: put logo  
 	 */
+	
 	public HeaderPanel() {
 		setHeight(null);
 		setWidth("100%");

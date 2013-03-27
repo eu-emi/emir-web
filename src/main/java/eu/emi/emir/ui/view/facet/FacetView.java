@@ -3,12 +3,7 @@
  */
 package eu.emi.emir.ui.view.facet;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.common.eventbus.EventBus;
-import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.navigator.View;

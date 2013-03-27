@@ -65,6 +65,10 @@ public class UIProperties extends PropertiesHelper{
 		return facets;
 	}
 	
+	public String getAddress(){
+		return getValue(PROP_ADDRESS);
+	}
+	
 	
 //	/**
 //	 * @param prefix

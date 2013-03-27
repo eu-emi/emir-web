@@ -5,14 +5,12 @@ package eu.emi.emir.ui.guice;
 
 import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
+import com.google.inject.Inject;
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 
 import eu.emi.emir.client.EMIRClient;
-import eu.emi.emir.ui.service.EmirEndpointListingService;
-import eu.emi.emir.ui.service.EmirFacetService;
-import eu.emi.emir.ui.service.EndpointListingService;
-import eu.emi.emir.ui.service.FacetService;
-import eu.emi.emir.ui.view.facet.FacetPresenter;
+import eu.emi.emir.ui.UIProperties;
 
 /**
  * @author a.memon
@@ -20,17 +18,18 @@ import eu.emi.emir.ui.view.facet.FacetPresenter;
  */
 public class ApplicationModule extends AbstractModule{
 
+	private EMIRClient client;
 	
-	
-	@Provides
+	@Provides @Singleton
 	EventBus createEventBus(){
 		return new EventBus("emir-event-bus");
 	}
 	
 	@Provides
-	EMIRClient createEmirClient(){
-		//TODO: should read from the properties files
-		return new EMIRClient("http://localhost:9127");
+	@Inject
+	EMIRClient createEmirClient(UIProperties props){
+		client = new EMIRClient(props.getAddress());
+		return client;
 	}
 	
 	/* (non-Javadoc)
@@ -38,6 +37,6 @@ public class ApplicationModule extends AbstractModule{
 	 */
 	@Override
 	protected void configure() {
-		
 	}
+
 }	

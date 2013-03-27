@@ -8,8 +8,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.ServletModule;
 import com.vaadin.shared.Version;
@@ -35,11 +39,18 @@ public class BaseModule extends ServletModule {
 				"Basic Guice Vaadin Application");
 		bind(String.class).annotatedWith(Names.named("version")).toInstance(
 				"<b>Vaadin " + Version.getFullVersion() + "</b>");
+		
 	}
 
 	@Provides
 	private Class<? extends UI> provideUIClass() {
 		return EmirUI.class;		
+	}
+	
+	//TODO: may (not) be a bad idea to have bus singleton 
+	@Provides @Singleton
+	ScheduledExecutorService createExecutorService(){
+		return Executors.newScheduledThreadPool(3);
 	}
 	
 	@Provides

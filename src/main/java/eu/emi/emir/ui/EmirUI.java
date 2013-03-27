@@ -11,12 +11,15 @@ import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.Navigator.ComponentContainerViewDisplay;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.util.CurrentInstance;
 
 import eu.emi.emir.ui.service.FacetService;
 import eu.emi.emir.ui.view.facet.FacetView;
 import eu.emi.emir.ui.view.listing.ListingView;
+import eu.emi.emir.ui.view.main.DisconnectWindow;
+import eu.emi.emir.ui.view.main.MainPresenter;
 import eu.emi.emir.ui.view.main.MainView;
 
 /* 
@@ -40,14 +43,15 @@ public class EmirUI extends UI {
 	@Inject(optional = true)
 	@Named("version")
 	private String version = "Vaadin <i>version unknown</i>";
-	
+
 	@Inject
 	private UIProperties webProps = new UIProperties(new Properties());
+
 	
 	private EventBus bus;
-	
+
 	private Injector injector;
-	
+
 	/**
 	 * @return the injector
 	 */
@@ -56,7 +60,8 @@ public class EmirUI extends UI {
 	}
 
 	/**
-	 * @param injector the injector to set
+	 * @param injector
+	 *            the injector to set
 	 */
 	@Inject
 	public void setInjector(Injector injector) {
@@ -94,9 +99,9 @@ public class EmirUI extends UI {
 	/**
 	 * 
 	 */
-	private void buildMainLayout() {
+	public void buildMainLayout() {
 		
-		navigator = new Navigator(UI.getCurrent(), this);
+//		navigator = new Navigator(UI.getCurrent(), this);
 
 		MainView content = new MainView();
 
@@ -105,13 +110,15 @@ public class EmirUI extends UI {
 //		ComponentContainerViewDisplay viewDisplay = new ComponentContainerViewDisplay(
 //				content);
 
-		navigator.addView(MainView.VIEW_NAME, content);
+//		navigator.addView(MainView.VIEW_NAME, content);
 
-		setNavigator(navigator);
+//		setNavigator(navigator);
 
-		navigator.navigateTo(MainView.VIEW_NAME);
+//		navigator.navigateTo(MainView.VIEW_NAME);
 
 	}
+
+
 
 	public static String getEmirServerAddress() {
 		return ApplicationState.getServerAddress();

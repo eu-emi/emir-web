@@ -32,8 +32,7 @@ public class ListingPresenter {
 	 * @param listingView
 	 */
 	public ListingPresenter() {
-		ui = EmirUI.getCurrent();
-		ui.getEventBus().register(this);
+		ui = EmirUI.getCurrent();		
 		
 	}
 
