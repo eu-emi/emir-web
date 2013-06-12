@@ -11,8 +11,10 @@ is mainly based on Vaadin v7 Web framework.
 2. Start the MongoDB server on default hostname and port, otherwise change the values in the emir.config configuration file
 
 3. Execute the main JettyServer class from src/test/java/eu/emi/emir/web, this will start
-	*. EMIR server
-	*. Web Server 
+	
+	*. EMIR Server
+	
+	*. Web Server hosting the Web application
 
 4. Open http://localhost:8080 on your browser, type http://localhost:9127 in the address field, then press the button Go.
 
