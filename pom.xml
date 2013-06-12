@@ -10,7 +10,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<vaadin.version>7.0.1</vaadin.version>
+		<vaadin.version>7.0.5</vaadin.version>
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 		<emir.version>1.2.2-SNAPSHOT</emir.version>
 		<jetty.version>8.1.4.v20120524</jetty.version>
@@ -91,6 +91,11 @@
 			<!-- <scope>provided</scope> -->
 		</dependency>
 		<dependency>
+            <groupId>org.vaadin.addons.lazyquerycontainer</groupId>
+            <artifactId>vaadin-lazyquerycontainer</artifactId>
+            <version>2.0.8</version>
+        </dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
@@ -99,7 +104,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>14.0-rc3</version>
+			<version>14.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.inject.extensions</groupId>
@@ -121,6 +126,12 @@
 			<groupId>eu.eu-emi</groupId>
 			<artifactId>emir-client</artifactId>
 			<version>${emir.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.eu-emi</groupId>
+			<artifactId>emir-core</artifactId>
+			<version>${emir.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

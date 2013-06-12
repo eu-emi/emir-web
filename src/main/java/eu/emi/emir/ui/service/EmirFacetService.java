@@ -10,13 +10,14 @@ import org.codehaus.jettison.json.JSONArray;
 import com.google.inject.Inject;
 
 import eu.emi.emir.client.EMIRClient;
+import eu.emi.emir.ui.view.address.Address;
 
 /**
  * @author a.memon
  *
  */
 public class EmirFacetService implements FacetService{
-
+	
 	@Inject
 	private EMIRClient client = new EMIRClient("http://localhost:9127");
 	
@@ -24,7 +25,7 @@ public class EmirFacetService implements FacetService{
 	 * 
 	 */
 	public EmirFacetService() {
-		System.out.println("");
+//		client = new EMIRClient(Address.get());
 	}
 	
 	/* (non-Javadoc)

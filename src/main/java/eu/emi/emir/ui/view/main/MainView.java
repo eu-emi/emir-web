@@ -3,23 +3,17 @@
  */
 package eu.emi.emir.ui.view.main;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import com.google.gwt.user.client.ui.IsRenderable;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
-import eu.emi.emir.client.EMIRClient;
 import eu.emi.emir.ui.EmirUI;
 import eu.emi.emir.ui.view.common.HeaderPanel;
 import eu.emi.emir.ui.view.facet.FacetView;
@@ -63,8 +57,6 @@ public class MainView extends VerticalLayout implements View {
 		
 		presenter = injector.getInstance(MainPresenter.class);
 		
-		 window = new DisconnectWindow(presenter);
-		 
 		 bus = injector.getInstance(EventBus.class);
 		 
 		 bus.register(this);
@@ -76,12 +68,12 @@ public class MainView extends VerticalLayout implements View {
 		setExpandRatio(panel, 0.25f);
 
 		if (!presenter.isReachable()) {
-			showDisconnectWindow();
+			Notification.show("EMIR Server is not reachable",Type.ERROR_MESSAGE);
 		} else {
 			FacetView facetView = new FacetView();
 
 			ListingView listView = new ListingView();
-
+			
 			HorizontalSplitPanel hPanel = new HorizontalSplitPanel(facetView,
 					listView);
 
@@ -98,16 +90,16 @@ public class MainView extends VerticalLayout implements View {
 			Navigator navigator = EmirUI.getCurrent().getNavigator();
 
 			// register the views
-//			navigator.addView(FacetView.VIEW_NAME, facetView);
+			navigator.addView(FacetView.VIEW_NAME, facetView);
 			
-//			navigator.addView(ListingView.VIEW_NAME, listView);
-		}		
-
+			navigator.addView(ListingView.VIEW_NAME, listView);
+			
+			
+		}
+		
 	}
 	
-	private void showDisconnectWindow(){
-		window.showWindow();
-	}
+
 
 	
 

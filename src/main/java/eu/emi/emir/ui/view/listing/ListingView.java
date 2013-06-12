@@ -45,13 +45,13 @@ public class ListingView extends VerticalLayout implements View {
 	 */
 	private void generateUI() {
 		setSizeFull();
-		t = new EndpointTable();
+		t = new EndpointTable(presenter);
 		addComponent(t);
 
 		JSONArray ja = presenter.getListing(null);
 
 		if (ja.length() > 0) {
-			t.updateTable(ja);
+			t.updateTable(null);
 		} else {
 			Notification.show("Found 0 Endpoints",
 					Notification.Type.HUMANIZED_MESSAGE);
@@ -68,18 +68,19 @@ public class ListingView extends VerticalLayout implements View {
 	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
-
+		
 	}
 
 	@Subscribe
 	public void handleListingViewEvent(ListingViewEvent e) {
-		JSONArray ja = presenter.getListing(e.getQuery());
-		if (ja.length() > 0) {
-			t.updateTable(ja);
-		} else {
-			Notification.show("Found 0 Endpoints",
-					Notification.Type.HUMANIZED_MESSAGE);
-		}
+//		JSONArray ja = presenter.getListing(e.getQuery());
+//		if (ja.length() > 0) {
+//			t.updateTable(ja);
+			t.updateTable(e.getQuery());
+//		} else {
+//			Notification.show("Found 0 Endpoints",
+//					Notification.Type.HUMANIZED_MESSAGE);
+//		}
 	}
 
 }

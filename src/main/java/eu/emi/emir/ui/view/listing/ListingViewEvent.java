@@ -53,11 +53,5 @@ public class ListingViewEvent implements Event{
 		return this.q;
 	}
 	
-	@Subscribe
-	public void handleListingViewEvent(ListingViewEvent e){
 		
-	}
-	
-	
-	
 }

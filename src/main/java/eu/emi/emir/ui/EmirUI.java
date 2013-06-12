@@ -16,6 +16,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.util.CurrentInstance;
 
 import eu.emi.emir.ui.service.FacetService;
+import eu.emi.emir.ui.view.address.AddressView;
 import eu.emi.emir.ui.view.facet.FacetView;
 import eu.emi.emir.ui.view.listing.ListingView;
 import eu.emi.emir.ui.view.main.DisconnectWindow;
@@ -47,7 +48,6 @@ public class EmirUI extends UI {
 	@Inject
 	private UIProperties webProps = new UIProperties(new Properties());
 
-	
 	private EventBus bus;
 
 	private Injector injector;
@@ -99,26 +99,57 @@ public class EmirUI extends UI {
 	/**
 	 * 
 	 */
-	public void buildMainLayout() {
-		
-//		navigator = new Navigator(UI.getCurrent(), this);
+	public void _buildMainLayout() {
+
+		navigator = new Navigator(UI.getCurrent(), this);
 
 		MainView content = new MainView();
-
+//		AddressView addressView = new AddressView();
+		
+//		setContent(addressView);
 		setContent(content);
 
+		ComponentContainerViewDisplay viewDisplay = new ComponentContainerViewDisplay(
+			content);
+		
 //		ComponentContainerViewDisplay viewDisplay = new ComponentContainerViewDisplay(
-//				content);
+//				addressView);
+		
+		navigator.addView(MainView.VIEW_NAME, content);
+		
+//		navigator.addView(AddressView.VIEW_NAME, addressView);
+		
+		setNavigator(navigator);
 
-//		navigator.addView(MainView.VIEW_NAME, content);
-
-//		setNavigator(navigator);
-
-//		navigator.navigateTo(MainView.VIEW_NAME);
+		navigator.navigateTo(MainView.VIEW_NAME);
+		
+//		navigator.navigateTo(AddressView.VIEW_NAME);
 
 	}
+	
+	/**
+	 * 
+	 */
+	public void buildMainLayout() {
 
+		navigator = new Navigator(this, this);
 
+		AddressView addressView = new AddressView();
+		
+		
+
+//		ComponentContainerViewDisplay viewDisplay = new ComponentContainerViewDisplay(
+//				addressView);
+		
+		setNavigator(navigator);
+		
+		navigator.addView(AddressView.VIEW_NAME, addressView);
+		
+		setContent(addressView);
+		
+		navigator.navigateTo(AddressView.VIEW_NAME);
+
+	}
 
 	public static String getEmirServerAddress() {
 		return ApplicationState.getServerAddress();

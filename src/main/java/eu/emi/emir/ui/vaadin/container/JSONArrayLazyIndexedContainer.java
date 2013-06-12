@@ -52,7 +52,6 @@ public class JSONArrayLazyIndexedContainer extends IndexedContainer {
 
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -75,12 +74,9 @@ public class JSONArrayLazyIndexedContainer extends IndexedContainer {
 					Calendar toDate = Calendar.getInstance();
 					toDate.setTime(DateUtil.getDate((JSONObject) obj));
 					val = DateUtil.duration(Calendar.getInstance(), toDate).toString();
-//					val = toDate.getTime().toString();
-//					addContainerProperty(key, String.class, null);
 				} else {
 					// render plain string
 					val = obj.toString();
-//					addContainerProperty(key, String.class, null);
 				}
 				addContainerProperty(key, String.class, null);
 				i.getItemProperty(key).setValue(val);
