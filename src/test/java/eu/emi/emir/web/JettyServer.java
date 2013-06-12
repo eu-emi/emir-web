@@ -52,16 +52,12 @@ public class JettyServer {
 		EMIRClient c = new EMIRClient("http://localhost:9127");
 		
 		//register 500 entries
-		c.register(TestValueConstants
-				.getDummyJSONArrayWithMandatoryAttributes(100));
-		c.register(TestValueConstants
-				.getDummyJSONArrayWithMandatoryAttributes(100));
-		c.register(TestValueConstants
-				.getDummyJSONArrayWithMandatoryAttributes(100));
-		c.register(TestValueConstants
-				.getDummyJSONArrayWithMandatoryAttributes(100));
-		c.register(TestValueConstants
-				.getDummyJSONArrayWithMandatoryAttributes(100));
+		for (int i = 0; i < 2; i++) {
+			c.register(TestValueConstants
+					.getDummyJSONArrayWithMandatoryAttributes(100));	
+		}
+		
+		
 	}
 
 	public static void runJetty() throws Exception {

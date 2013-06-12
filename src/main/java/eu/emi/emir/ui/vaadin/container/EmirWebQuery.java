@@ -84,26 +84,10 @@ public class EmirWebQuery implements Query {
 					resultItems.add(queryFactory.constructItem(jo));
 				}
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
 		}
         
-//        for (int i = 0; i < count; i++) {
-//            // Returning clones to be able to control commit/discard of modifications.
-//            Item original = items.get(startIndex + i);
-//            Item clone = cloneItem(original);
-//            resultItems.add(clone);
-//            cloneMap.put(clone, original);
-//        }
-//
-//        try {
-//            Thread.sleep(batchQueryMinTime + (int) (Math.random() * batchQueryMaxTime));
-//        } catch (InterruptedException e) {
-//        }
-
         return resultItems;
     }
 	

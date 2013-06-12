@@ -3,14 +3,16 @@
  */
 package eu.emi.emir.ui.view.common;
 
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
+
+import eu.emi.emir.ui.view.address.Address;
 
 /**
  * @author a.memon
  *
  */
-public class HeaderPanel extends HorizontalLayout{
+public class HeaderPanel extends VerticalLayout{
 	/**
 	 * 
 	 */
@@ -25,7 +27,12 @@ public class HeaderPanel extends HorizontalLayout{
 		setWidth("100%");
 		
 		Label l = new Label("EMIR Query Browser");
-		addComponent(l);		
+		
+		//TODO: should be able to change the address
+		Label conn = new Label("Connected with EMIR on address: "+Address.get());
+		
+		addComponent(l);
+		addComponent(conn);
 		
 	}
 }

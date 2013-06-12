@@ -4,6 +4,7 @@
 package eu.emi.emir.ui.view.facet;
 
 import com.google.common.eventbus.EventBus;
+import com.sun.jersey.json.impl.JSONHelper;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.navigator.View;
@@ -12,6 +13,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import eu.emi.emir.client.query.URIQuery;
 import eu.emi.emir.ui.EmirUI;
+import eu.emi.emir.ui.vaadin.container.JSONArrayHierarchichalContainer;
 import eu.emi.emir.ui.view.listing.ListingViewEvent;
 
 /**
@@ -78,11 +80,11 @@ public class FacetView extends VerticalLayout implements View,
 
 		if (!tree.isRoot(event.getItemId())) {
 			String itemVal = tree.getItem(event.getItemId())
-			.getItemProperty("name").getValue().toString();
-			
+			.getItemProperty(JSONArrayHierarchichalContainer.PROPERTY_VAL).getValue().toString();
 			String attrValue = itemVal.substring(0, itemVal.indexOf('('));
-			String key = tree.getItem(tree.getParent(event.getItemId())).getItemProperty("name").getValue().toString();
-			String value = tree.getItem(event.getItemId()).getItemProperty("name").getValue().toString();
+
+			String key = tree.getItem(tree.getParent(event.getItemId())).getItemProperty(JSONArrayHierarchichalContainer.PROPERTY_NAME).getValue().toString();
+			
 			bus.post(new ListingViewEvent(URIQuery.builder().addParam(key, attrValue.trim()).build()));
 		}
 	}

@@ -10,6 +10,8 @@ import org.codehaus.jettison.json.JSONObject;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.HierarchicalContainer;
 
+import eu.emi.emir.client.ServiceBasicAttributeNames;
+
 /**
  * The hierarchical container used to build the facet tree from 2D json Array
  * 
@@ -31,6 +33,7 @@ public class JSONArrayHierarchichalContainer extends HierarchicalContainer {
 		Object childItemId = null;
 
 		addContainerProperty(PROPERTY_NAME, String.class, null);
+		addContainerProperty(PROPERTY_VAL, String.class, null);
 		try {
 
 			for (int i = 0; i < ja.length(); i++) {
@@ -41,8 +44,15 @@ public class JSONArrayHierarchichalContainer extends HierarchicalContainer {
 				// Add name property for item
 				JSONObject facet = ja.getJSONObject(i);
 				String keyName = facet.names().getString(0);
-
-				parentItem.getItemProperty(PROPERTY_NAME).setValue(keyName);
+				
+				//TODO: the map of facets and user friendly names should come from view/presenter 
+				parentItem.getItemProperty(PROPERTY_NAME).setValue(keyName);	
+				if (keyName.equals(ServiceBasicAttributeNames.SERVICE_ENDPOINT_CAPABILITY.getAttributeName())) {
+					parentItem.getItemProperty(PROPERTY_VAL).setValue("Service Capabilities");	
+				} else if (keyName.equals(ServiceBasicAttributeNames.SERVICE_TYPE.getAttributeName())){
+					parentItem.getItemProperty(PROPERTY_VAL).setValue("Service Types");
+				}
+				
 				// Allow children
 				setChildrenAllowed(parentItemId, true);
 				JSONArray childItems = facet.getJSONArray(keyName);
@@ -51,7 +61,7 @@ public class JSONArrayHierarchichalContainer extends HierarchicalContainer {
 					childItemId = addItem();
 					childItem = getItem(childItemId);
 					JSONObject childJson = childItems.getJSONObject(j);
-					childItem.getItemProperty(PROPERTY_NAME).setValue(
+					childItem.getItemProperty(PROPERTY_VAL).setValue(
 							childJson.getString("_id") + " ("
 									+ childJson.getLong("count") + ")");
 					setParent(childItemId, parentItemId);

@@ -14,8 +14,8 @@ import eu.emi.emir.client.EMIRClient;
 import eu.emi.emir.ui.EmirUI;
 import eu.emi.emir.ui.view.main.MainView;
 
-public class AddressView extends HorizontalLayout implements View{
-	
+public class AddressView extends HorizontalLayout implements View {
+
 	private static final long serialVersionUID = 1L;
 	public static final String VIEW_NAME = "view.address";
 
@@ -24,9 +24,10 @@ public class AddressView extends HorizontalLayout implements View{
 		Label lbl = new Label("EMIR Server Address:");
 		addComponent(lbl);
 		final TextField txtAddress = new TextField();
-		
+		txtAddress.setWidth(75, Unit.PERCENTAGE);
+		txtAddress.setHeight(29, Unit.PIXELS);
 		addComponent(txtAddress);
-		Button btn = new Button("Connect", new Button.ClickListener() {
+		Button btn = new Button("Go >", new Button.ClickListener() {
 			/**
 			 * 
 			 */
@@ -36,23 +37,26 @@ public class AddressView extends HorizontalLayout implements View{
 			public void buttonClick(ClickEvent event) {
 				String address = txtAddress.getValue();
 				if (!(address.isEmpty() && address == null)) {
-					Address.set(txtAddress.getValue());	
-				} 
-				
+					Address.set(txtAddress.getValue());
+				}
+
 				if (new EMIRClient(address).isReachable()) {
-					EmirUI.getCurrent().getNavigator().addView(MainView.VIEW_NAME, new MainView());
-					EmirUI.getCurrent().getNavigator().navigateTo(MainView.VIEW_NAME);
+					EmirUI.getCurrent().getNavigator()
+							.addView(MainView.VIEW_NAME, new MainView());
+					EmirUI.getCurrent().getNavigator()
+							.navigateTo(MainView.VIEW_NAME);
 				} else {
 					Address.unset();
-					Notification.show("EMIR Server is not reachable on: "+address, Type.ERROR_MESSAGE);
+					Notification.show("EMIR Server is not reachable on: "
+							+ address, Type.ERROR_MESSAGE);
 				}
 			}
 		});
-		addComponent(btn);
+		addComponent(btn);		
 	}
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-				
+
 	}
 }

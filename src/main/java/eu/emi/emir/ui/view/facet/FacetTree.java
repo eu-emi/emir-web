@@ -5,6 +5,8 @@ package eu.emi.emir.ui.view.facet;
 
 import org.codehaus.jettison.json.JSONArray;
 import com.vaadin.ui.Tree;
+
+import eu.emi.emir.client.ServiceBasicAttributeNames;
 import eu.emi.emir.ui.vaadin.container.JSONArrayHierarchichalContainer;
 
 /**
@@ -20,8 +22,9 @@ public class FacetTree extends Tree{
 	public FacetTree(JSONArray ja) {
 		container = new JSONArrayHierarchichalContainer(ja);
 		setContainerDataSource(container);
-		setItemCaptionPropertyId(container.PROPERTY_NAME);
+		setItemCaptionPropertyId(JSONArrayHierarchichalContainer.PROPERTY_VAL);
         setItemCaptionMode(ItemCaptionMode.PROPERTY);
+	    
         for (Object id : rootItemIds()) {
             expandItemsRecursively(id);
         }

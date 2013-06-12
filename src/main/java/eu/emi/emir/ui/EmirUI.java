@@ -16,6 +16,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.util.CurrentInstance;
 
 import eu.emi.emir.ui.service.FacetService;
+import eu.emi.emir.ui.view.address.Address;
 import eu.emi.emir.ui.view.address.AddressView;
 import eu.emi.emir.ui.view.facet.FacetView;
 import eu.emi.emir.ui.view.listing.ListingView;
@@ -134,6 +135,10 @@ public class EmirUI extends UI {
 
 		navigator = new Navigator(this, this);
 
+		//if the address is not null should redirect the user directly to the main view
+		if (Address.get() != null) {			
+			navigator.navigateTo(MainView.VIEW_NAME);
+		}
 		AddressView addressView = new AddressView();
 		
 		
