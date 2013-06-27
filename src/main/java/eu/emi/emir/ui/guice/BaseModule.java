@@ -47,24 +47,10 @@ public class BaseModule extends ServletModule {
 		return EmirUI.class;		
 	}
 	
-	//TODO: may (not) be a bad idea to have bus singleton 
+	//TODO: probably a bad idea to have bus singleton 
 	@Provides @Singleton
 	ScheduledExecutorService createExecutorService(){
 		return Executors.newScheduledThreadPool(3);
 	}
 	
-	@Provides
-	private UIProperties provideUIProperties(){
-		String path = getServletContext().getRealPath("config/emir.properties");
-		Properties p = new Properties();
-		try {
-			p.load(new FileInputStream(new File(path)));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		UIProperties emirProps = new UIProperties(p);
-		return emirProps;
-	}
 }

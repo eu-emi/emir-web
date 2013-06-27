@@ -29,9 +29,6 @@ import eu.emi.emir.client.TestValueConstants;
  */
 public class JettyServer {
 	public static void main(String[] args) throws Exception {
-		runEmir();
-		removeAllDummyData();
-		addPublicDummyData();
 		runJetty();
 
 	}

@@ -7,6 +7,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
 import com.vaadin.annotations.PreserveOnRefresh;
+import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.Navigator.ComponentContainerViewDisplay;
@@ -18,10 +19,6 @@ import com.vaadin.util.CurrentInstance;
 import eu.emi.emir.ui.service.FacetService;
 import eu.emi.emir.ui.view.address.Address;
 import eu.emi.emir.ui.view.address.AddressView;
-import eu.emi.emir.ui.view.facet.FacetView;
-import eu.emi.emir.ui.view.listing.ListingView;
-import eu.emi.emir.ui.view.main.DisconnectWindow;
-import eu.emi.emir.ui.view.main.MainPresenter;
 import eu.emi.emir.ui.view.main.MainView;
 
 /* 
@@ -32,6 +29,7 @@ import eu.emi.emir.ui.view.main.MainView;
  */
 @Title("EMIR Browser")
 @PreserveOnRefresh
+@Theme("emir")
 public class EmirUI extends UI {
 
 	private static final long serialVersionUID = 1L;
@@ -45,9 +43,6 @@ public class EmirUI extends UI {
 	@Inject(optional = true)
 	@Named("version")
 	private String version = "Vaadin <i>version unknown</i>";
-
-	@Inject
-	private UIProperties webProps = new UIProperties(new Properties());
 
 	private EventBus bus;
 

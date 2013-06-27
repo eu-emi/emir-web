@@ -35,7 +35,14 @@ public class JSONArrayHierarchichalContainer extends HierarchicalContainer {
 		addContainerProperty(PROPERTY_NAME, String.class, null);
 		addContainerProperty(PROPERTY_VAL, String.class, null);
 		try {
-
+			//add ALL node
+			parentItemId = addItem();
+			parentItem = getItem(parentItemId);
+			parentItem.getItemProperty(PROPERTY_NAME).setValue("All");
+			parentItem.getItemProperty(PROPERTY_VAL).setValue("All");
+			//all should not contain any children
+			setChildrenAllowed(parentItemId, false);
+			
 			for (int i = 0; i < ja.length(); i++) {
 				// Add new item
 				parentItemId = addItem();
@@ -45,7 +52,6 @@ public class JSONArrayHierarchichalContainer extends HierarchicalContainer {
 				JSONObject facet = ja.getJSONObject(i);
 				String keyName = facet.names().getString(0);
 				
-				//TODO: the map of facets and user friendly names should come from view/presenter 
 				parentItem.getItemProperty(PROPERTY_NAME).setValue(keyName);	
 				if (keyName.equals(ServiceBasicAttributeNames.SERVICE_ENDPOINT_CAPABILITY.getAttributeName())) {
 					parentItem.getItemProperty(PROPERTY_VAL).setValue("Service Capabilities");	

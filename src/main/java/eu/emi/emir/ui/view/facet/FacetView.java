@@ -86,6 +86,10 @@ public class FacetView extends VerticalLayout implements View,
 			String key = tree.getItem(tree.getParent(event.getItemId())).getItemProperty(JSONArrayHierarchichalContainer.PROPERTY_NAME).getValue().toString();
 			
 			bus.post(new ListingViewEvent(URIQuery.builder().addParam(key, attrValue.trim()).build()));
+		} else if(tree.getItem(event.getItemId())
+			.getItemProperty(JSONArrayHierarchichalContainer.PROPERTY_VAL).getValue().toString().equals("All")){
+			//fetch all the records again
+			bus.post(new ListingViewEvent(URIQuery.builder().build()));
 		}
 	}
 

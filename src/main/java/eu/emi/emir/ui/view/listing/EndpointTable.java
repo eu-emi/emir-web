@@ -64,31 +64,13 @@ public class EndpointTable extends Table implements ItemClickListener {
 	 * 
 	 */
 	private void init() {
-		setColumnCollapsingAllowed(true);
 		setSortEnabled(true);
-
-		// turn on column reordering and collapsing
-		setColumnReorderingAllowed(true);
-		setColumnCollapsingAllowed(true);
-
 		// set the size
 		setSizeFull();
 
-		/////////////
-		// allow only single select
-//		setSelectable(true);
-//		setMultiSelect(false);
-//
-//		List<String> lst = new ArrayList<String>();
-//
-//		lst.add(ServiceBasicAttributeNames.SERVICE_ENDPOINT_ID.toString());
-//		lst.add(ServiceBasicAttributeNames.SERVICE_ENDPOINT_URL.toString());
-//
-//		Map<String, String> map = attrMap.getAttributeMap();
-
-		/////////////
-		
 		LazyQueryDefinition d = new LazyQueryDefinition(true, 100, "ID");
+		
+//		LazyQueryDefinition d = new LazyQueryDefinition(true, 100, "PublishedBy");
 		
 		EmirWebQueryFactory mockQueryFactory = new EmirWebQueryFactory(d, presenter.getEmirClient(), URIQuery.builder().build());
         LazyQueryContainer container = new LazyQueryContainer(d, mockQueryFactory);
@@ -117,6 +99,8 @@ public class EndpointTable extends Table implements ItemClickListener {
         setEditable(false);
         setMultiSelect(false);
         setSelectable(true);
+		setColumnReorderingAllowed(true);
+		setColumnCollapsingAllowed(true);
 		
 		addItemClickListener(this);
 
@@ -159,7 +143,7 @@ public class EndpointTable extends Table implements ItemClickListener {
 	 */
 	@Override
 	public void itemClick(ItemClickEvent event) {
-
+		System.out.println(event.getItemId());
 	}
 
 	/**
@@ -167,6 +151,8 @@ public class EndpointTable extends Table implements ItemClickListener {
 	 */
 	public void updateTable(URIQuery query) {
 		LazyQueryDefinition d = new LazyQueryDefinition(true, 100, "ID");
+//		LazyQueryDefinition d = new LazyQueryDefinition(true, 100, "PublishedBy");
+		
 		if (query == null) {
 			query = URIQuery.builder().build();
 		}

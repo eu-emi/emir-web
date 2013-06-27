@@ -10,11 +10,11 @@
 <!-- 		<param-value>true</param-value> -->
 <!-- 	</context-param> -->
 
-	<context-param>
-		<description>Vaadin production mode</description>
-		<param-name>path</param-name>
-		<param-value>./config/emir.properties</param-value>
-	</context-param>
+<!-- 	<context-param> -->
+<!-- 		<description>Vaadin production mode</description> -->
+<!-- 		<param-name>path</param-name> -->
+<!-- 		<param-value>./config/emir.properties</param-value> -->
+<!-- 	</context-param> -->
 	
 <!-- 	<filter> -->
 <!-- 		<filter-name>guiceFilter</filter-name> -->

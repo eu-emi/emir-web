@@ -39,184 +39,201 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Mock implementation of QueryFactory interface for JUnit tests and example application.
- *
+ * Mock implementation of QueryFactory interface for JUnit tests and example
+ * application.
+ * 
  * @author Tommi S.E. Laukkanen
  */
 public class EmirWebQueryFactory implements QueryFactory {
 
-    private List<Item> items;
-    private QueryDefinition definition;
-//    private int resultSize;
-    private int batchQueryMinTime;
-    private int batchQueryMaxTime;
-    private EMIRClient c;
+	private List<Item> items;
+	private QueryDefinition definition;
+	// private int resultSize;
+	private int batchQueryMinTime;
+	private int batchQueryMaxTime;
+	private EMIRClient c;
 	private URIQuery uriQuery;
-    
-    
-    public EmirWebQueryFactory(QueryDefinition d, EMIRClient client, URIQuery uriQuery) {
-//        this.resultSize = resultSize;
-        this.batchQueryMinTime = batchQueryMinTime;
-        this.batchQueryMaxTime = batchQueryMaxTime;
-        this.definition = d;
-        this.c = client;
-        this.uriQuery = uriQuery;
-    }
 
-    public void setQueryDefinition(QueryDefinition definition) {
-        this.definition = definition;
-    }
-    
-    public EMIRClient getEmirClient(){
-    	return c;
-    }
-    
-    public Query constructQuery(QueryDefinition definition) {
-    	JSONArray ja = null;
-        // Creating items on demand when constructQuery is first time called.
-        if (items == null) {
-            items = new ArrayList<Item>();
-            ja = c.queryByQueryParams(EndpointQuery.builder().addParam("limit", "100").build());
-			
-            
-//            for (int i = 0; i < resultSize; i++) {
-//                this.items.add(constructItem(items.size(), resultSize - items.size()));
-//            }
-        } else {        	
-        	ja = c.queryByQueryParams(EndpointQuery.builder().addParam("limit", "100").addParam("skip", ("100")).build());
-        	System.out.println("items are not null");
-        }
-        
-        try {
+	public EmirWebQueryFactory(QueryDefinition d, EMIRClient client,
+			URIQuery uriQuery) {
+		// this.resultSize = resultSize;
+		this.batchQueryMinTime = batchQueryMinTime;
+		this.batchQueryMaxTime = batchQueryMaxTime;
+		this.definition = d;
+		this.c = client;
+		this.uriQuery = uriQuery;
+	}
+
+	public void setQueryDefinition(QueryDefinition definition) {
+		this.definition = definition;
+	}
+
+	public EMIRClient getEmirClient() {
+		return c;
+	}
+
+	public Query constructQuery(QueryDefinition definition) {
+		JSONArray ja = null;
+		// Creating items on demand when constructQuery is first time called.
+		if (items == null) {
+			items = new ArrayList<Item>();
+			ja = c.queryByQueryParams(EndpointQuery.builder()
+					.addParam("limit", "100").build());
+		} else {
+			ja = c.queryByQueryParams(EndpointQuery.builder()
+					.addParam("limit", "100").addParam("skip", ("100")).build());
+		}
+
+		try {
 			for (int i = 0; i < ja.length(); i++) {
-				
+
 				JSONObject eptObj;
 				eptObj = ja.getJSONObject(i);
 				if (!eptObj.has("ref")) {
-					this.items.add(constructItem(eptObj));	
+					this.items.add(constructItem(eptObj));
 				}
-				
+
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-//        if (definition.getSortPropertyIds().length != 0) {
-//            ItemComparator comparator = new ItemComparator(definition.getSortPropertyIds(),
-//                    definition.getSortPropertyAscendingStates());
-//            Collections.sort(this.items, comparator);
-//        }
 
-//        return new MockQuery(this, this.items, batchQueryMinTime, batchQueryMaxTime);
-        return new EmirWebQuery(this, this.items, this.uriQuery);
-    }
+		return new EmirWebQuery(this, this.items, this.uriQuery);
+	}
 
-    public Item _constructItem(int indexColumnValue, int reverseIndexColumnValue) {
-        // since construct item needs to know what the current size is (including added items)
-        // to populate Index and ReverseIndex we should provide it somehow here!
-        // At the moment adding multiple items leads to strange behaviour.
-        PropertysetItem item = new PropertysetItem();
-        
-        for (Object propertyId : this.definition.getPropertyIds()) {
+	public Item _constructItem(int indexColumnValue, int reverseIndexColumnValue) {
+		// since construct item needs to know what the current size is
+		// (including added items)
+		// to populate Index and ReverseIndex we should provide it somehow here!
+		// At the moment adding multiple items leads to strange behaviour.
+		PropertysetItem item = new PropertysetItem();
 
-            Object value = null;
+		for (Object propertyId : this.definition.getPropertyIds()) {
 
-            if ("Index".equals(propertyId)) {
-                value = indexColumnValue;
-            } else if ("ReverseIndex".equals(propertyId)) {
-                value = reverseIndexColumnValue;
-            } else {
-                value = this.definition.getPropertyDefaultValue(propertyId);
-            }
+			Object value = null;
 
-            item.addItemProperty(propertyId, new ObjectProperty(
-                    value,
-                    this.definition.getPropertyType(propertyId),
-                    this.definition.isPropertyReadOnly(propertyId)
-            ));
-
-        }
-        return item;
-    }
-    
-    public Item constructItem(JSONObject jo) {
-        // since construct item needs to know what the current size is (including added items)
-        // to populate Index and ReverseIndex we should provide it somehow here!
-        // At the moment adding multiple items leads to strange behaviour.
-        PropertysetItem item = new PropertysetItem();
-        try {
-        for (Object propertyId : this.definition.getPropertyIds()) {
-
-            Object value = null;
-
-            if ("Name".equals(propertyId)) {
-					value = jo.getString(ServiceBasicAttributeNames.SERVICE_NAME.getAttributeName());
-			} else if("PublishedBy".equals(propertyId)){
-					value = jo.getString(ServiceBasicAttributeNames.SERVICE_OWNER_DN.getAttributeName());
-			} else if("ExpireOn".equals(propertyId)){
-				Calendar fromDate = Calendar.getInstance();
-				DateUtil.getDate(jo.getJSONObject(ServiceBasicAttributeNames.SERVICE_EXPIRE_ON.getAttributeName()));
-				fromDate.setTime(DateUtil.getDate(jo.getJSONObject(ServiceBasicAttributeNames.SERVICE_EXPIRE_ON.getAttributeName())));
-				value = DateUtil.duration(Calendar.getInstance(), fromDate).toString();
-			} else if("URL".equals(propertyId)){
-				value = jo.getString(ServiceBasicAttributeNames.SERVICE_ENDPOINT_URL.getAttributeName());
-			} else if("ID".equals(propertyId)){
-				value = jo.getString(ServiceBasicAttributeNames.SERVICE_ENDPOINT_ID.getAttributeName());
+			if ("Index".equals(propertyId)) {
+				value = indexColumnValue;
+			} else if ("ReverseIndex".equals(propertyId)) {
+				value = reverseIndexColumnValue;
+			} else {
+				value = this.definition.getPropertyDefaultValue(propertyId);
 			}
-            
-            item.addItemProperty(propertyId, new ObjectProperty(
-                    value,
-                    this.definition.getPropertyType(propertyId),
-                    this.definition.isPropertyReadOnly(propertyId)
-            ));
 
-        }
-        } catch (Exception e) {
-			// TODO Auto-generated catch block
+			item.addItemProperty(propertyId, new ObjectProperty(value,
+					this.definition.getPropertyType(propertyId),
+					this.definition.isPropertyReadOnly(propertyId)));
+
+		}
+		return item;
+	}
+
+	public Item constructItem(JSONObject jo) {
+		// since construct item needs to know what the current size is
+		// (including added items)
+		// to populate Index and ReverseIndex we should provide it somehow here!
+		// At the moment adding multiple items leads to strange behaviour.
+		PropertysetItem item = new PropertysetItem();
+		try {
+			for (Object propertyId : this.definition.getPropertyIds()) {
+
+				Object value = null;
+
+				if ("Name".equals(propertyId)) {
+					if (jo.has(ServiceBasicAttributeNames.SERVICE_NAME
+							.getAttributeName())) {
+						value = jo
+								.getString(ServiceBasicAttributeNames.SERVICE_NAME
+										.getAttributeName());
+					} else {
+						value = "";
+					}
+				} else
+				if ("PublishedBy".equals(propertyId)) {
+					value = jo
+							.getString(ServiceBasicAttributeNames.SERVICE_OWNER_DN
+									.getAttributeName());
+				} else if ("ExpireOn".equals(propertyId)) {
+					Calendar fromDate = Calendar.getInstance();
+					DateUtil.getDate(jo
+							.getJSONObject(ServiceBasicAttributeNames.SERVICE_EXPIRE_ON
+									.getAttributeName()));
+					fromDate.setTime(DateUtil.getDate(jo
+							.getJSONObject(ServiceBasicAttributeNames.SERVICE_EXPIRE_ON
+									.getAttributeName())));
+					value = DateUtil.duration(Calendar.getInstance(), fromDate)
+							.toString();
+				} else if ("URL".equals(propertyId)) {
+					if (jo.has(ServiceBasicAttributeNames.SERVICE_ENDPOINT_URL
+							.getAttributeName()))
+						value = jo
+							.getString(ServiceBasicAttributeNames.SERVICE_ENDPOINT_URL
+									.getAttributeName());
+					else
+						value = "";
+				} 
+				
+				else if ("ID".equals(propertyId)) {
+					if(jo.has(ServiceBasicAttributeNames.SERVICE_ENDPOINT_ID
+							.getAttributeName()))
+						value = jo
+							.getString(ServiceBasicAttributeNames.SERVICE_ENDPOINT_ID
+									.getAttributeName());
+					else
+						value = "";
+				}
+
+				item.addItemProperty(propertyId, new ObjectProperty(value,
+						this.definition.getPropertyType(propertyId),
+						this.definition.isPropertyReadOnly(propertyId)));
+
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        return item;
-    }
-    
+		return item;
+	}
 
-    public void addProperty(Object propertyId, Class<?> type,
-                            Object defaultValue, boolean readOnly, boolean sortable) {
-        for (Item item : this.items) {
-            ((PropertysetItem) item).addItemProperty(
-                    propertyId, new ObjectProperty(defaultValue, type, readOnly));
+	public void addProperty(Object propertyId, Class<?> type,
+			Object defaultValue, boolean readOnly, boolean sortable) {
+		for (Item item : this.items) {
+			((PropertysetItem) item).addItemProperty(propertyId,
+					new ObjectProperty(defaultValue, type, readOnly));
 
-        }
-    }
+		}
+	}
 
-    public class ItemComparator implements Comparator<Item> {
-        private Object[] sortPropertyIds;
-        private boolean[] ascendingStates;
+	public class ItemComparator implements Comparator<Item> {
+		private Object[] sortPropertyIds;
+		private boolean[] ascendingStates;
 
-        public ItemComparator(Object[] sortPropertyIds, boolean[] ascendingStates) {
-            this.sortPropertyIds = sortPropertyIds;
-            this.ascendingStates = ascendingStates;
-        }
+		public ItemComparator(Object[] sortPropertyIds,
+				boolean[] ascendingStates) {
+			this.sortPropertyIds = sortPropertyIds;
+			this.ascendingStates = ascendingStates;
+		}
 
-        public int compare(Item o1, Item o2) {
+		public int compare(Item o1, Item o2) {
 
-            for (int i = 0; i < sortPropertyIds.length; i++) {
-                Property p1 = o1.getItemProperty(sortPropertyIds[i]);
-                Property p2 = o2.getItemProperty(sortPropertyIds[i]);
+			for (int i = 0; i < sortPropertyIds.length; i++) {
+				Property p1 = o1.getItemProperty(sortPropertyIds[i]);
+				Property p2 = o2.getItemProperty(sortPropertyIds[i]);
 
-                int v1 = (Integer) p1.getValue();
-                int v2 = (Integer) p2.getValue();
+				int v1 = (Integer) p1.getValue();
+				int v2 = (Integer) p2.getValue();
 
-                if (v1 != v2) {
-                    int comparison = v1 - v2;
-                    if (!ascendingStates[i]) {
-                        comparison = -comparison;
-                    }
-                    return comparison;
-                }
-            }
+				if (v1 != v2) {
+					int comparison = v1 - v2;
+					if (!ascendingStates[i]) {
+						comparison = -comparison;
+					}
+					return comparison;
+				}
+			}
 
-            return 0;
-        }
+			return 0;
+		}
 
-    }
+	}
 
 }

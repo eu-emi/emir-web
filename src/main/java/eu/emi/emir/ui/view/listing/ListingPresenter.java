@@ -10,6 +10,7 @@ import com.google.inject.Inject;
 import eu.emi.emir.client.EMIRClient;
 import eu.emi.emir.client.query.URIQuery;
 import eu.emi.emir.ui.EmirUI;
+import eu.emi.emir.ui.view.address.Address;
 
 /**
  * 
@@ -22,7 +23,7 @@ public class ListingPresenter {
 	private EmirUI ui;
 	private ListingView view;
 	
-	@Inject
+//	@Inject
 	private EMIRClient client;
 	
 	
@@ -40,10 +41,13 @@ public class ListingPresenter {
 	}
 
 	public JSONArray getListing(URIQuery q){
-		return client.queryByQueryParams(q);
+		return getEmirClient().queryByQueryParams(q);
 	}
 	
 	public EMIRClient getEmirClient(){
+		if (client == null) {
+			client = new EMIRClient(Address.get());
+		}
 		return client;
 	}
 }

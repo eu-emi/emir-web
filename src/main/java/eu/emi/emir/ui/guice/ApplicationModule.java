@@ -18,23 +18,10 @@ import eu.emi.emir.ui.UIProperties;
  */
 public class ApplicationModule extends AbstractModule{
 
-	private EMIRClient client;
-	
-	@Provides @Singleton
 	EventBus createEventBus(){
 		return new EventBus("emir-event-bus");
 	}
 	
-	@Provides
-	@Inject
-	EMIRClient createEmirClient(UIProperties props){
-		client = new EMIRClient(props.getAddress());
-		return client;
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.google.inject.AbstractModule#configure()
-	 */
 	@Override
 	protected void configure() {
 	}

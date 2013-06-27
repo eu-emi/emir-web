@@ -64,13 +64,14 @@ public class EmirWebQuery implements Query {
         List<Item> resultItems = new ArrayList<Item>();
         
         JSONArray ja = null;
+        URIQuery query = null;
         try {
         	
         if (!(startIndex <= 0)) {
-        	URIQuery query = URIQuery.builder().setSkip(startIndex).setResultLimit(count).mergeURIQuery(uriQuery).build();
+        	query = URIQuery.builder().setSkip(startIndex).setResultLimit(count).mergeURIQuery(uriQuery).build();
         	ja = this.queryFactory.getEmirClient().queryByQueryParams(query);
 		} else {
-			URIQuery query = URIQuery.builder().setResultLimit(count).mergeURIQuery(uriQuery).build();
+			query = URIQuery.builder().setResultLimit(count).mergeURIQuery(uriQuery).build();
 			ja = this.queryFactory.getEmirClient().queryByQueryParams(query);
 		}
         

@@ -18,9 +18,9 @@ import eu.emi.emir.ui.view.address.Address;
  */
 public class EmirFacetService implements FacetService{
 	
-	@Inject
-	private EMIRClient client = new EMIRClient("http://localhost:9127");
-	
+//	@Inject
+//	private EMIRClient client = new EMIRClient("http://localhost:9127");
+	private EMIRClient client;
 	/**
 	 * 
 	 */
@@ -33,6 +33,9 @@ public class EmirFacetService implements FacetService{
 	 */
 	@Override
 	public JSONArray getFacets(Map<String, String> facets) {
+		if (client == null) {
+			client = new EMIRClient(Address.get());
+		}
 		return client.facetSearch(facets);
 	}	
 
