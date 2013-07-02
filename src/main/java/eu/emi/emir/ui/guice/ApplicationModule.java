@@ -5,12 +5,6 @@ package eu.emi.emir.ui.guice;
 
 import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
-import com.google.inject.Inject;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
-
-import eu.emi.emir.client.EMIRClient;
-import eu.emi.emir.ui.UIProperties;
 
 /**
  * @author a.memon

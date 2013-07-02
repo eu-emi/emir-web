@@ -3,12 +3,6 @@
  */
 package eu.emi.emir.ui.guice;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Properties;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -20,7 +14,6 @@ import com.vaadin.shared.Version;
 import com.vaadin.ui.UI;
 
 import eu.emi.emir.ui.EmirUI;
-import eu.emi.emir.ui.UIProperties;
 
 /**
  * @author a.memon
